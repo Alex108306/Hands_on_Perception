@@ -36,6 +36,15 @@ target_link_libraries(detecting_aruco
     ${OpenCV_LIBRARIES}
     )
 
+set(camera_calibrate_src
+    src/camera_calibration.cpp
+)
+
+add_executable(camera_calibrate ${camera_calibrate_src})
+target_link_libraries(camera_calibrate
+    ${OpenCV_LIBRARIES}
+    )
+
 target_compile_options(generate_marker
     PRIVATE -O3 -std=c++11
     )
