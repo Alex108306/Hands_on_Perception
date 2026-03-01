@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
         return -1;
     }
 
-    cv::aruco::GridBoard grid_board(cv::Size(num_collums, num_rows), length_aruco, seperation, dict);
+    cv::aruco::GridBoard grid_board(cv::Size(num_collums, num_rows), length_aruco, seperation, dict); // if switch to num_rows, num collums, the reprojection error will be lower
     cv::Mat camera_matrix, distCoeffs;
     vector<cv::Mat> rvecs, tvecs;
     vector<cv::Mat> processed_objectPoints, processed_imagePoints;
