@@ -37,8 +37,8 @@ This repository contains code and resources for two perception labs:
 - Lab 2 includes video files showing the output of both the accumulate and Gaussian methods.  
     Check the `lab2/data/` directory for sample results.
 
-[![Accumulate Method Output]](lab_2/lab/data/indoor_flying4_event_stream.mp4)
-[![Gaussian Method Output]](lab_2/lab/data/indoor_flying4_images.mp4)
+[![Accumulate Method Output]](lab_2/lab/videos/indoor_flying4_event_stream.mp4)
+[![Gaussian Method Output]](lab_2/lab/videos/indoor_flying4_images.mp4)
 
 ---
 
