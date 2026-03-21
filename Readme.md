@@ -10,6 +10,7 @@ This repository contains code and resources for two perception labs:
     - Generate and print ArUco markers.
     - Detect markers in real-time video streams.
     - Estimate marker pose and overlay virtual objects for AR effects.
+    - Estimate pose relative and distance between two aruco marker poses
 
 ## Lab 2: Event-Based Camera Processing
 
@@ -35,7 +36,7 @@ This repository contains code and resources for two perception labs:
 ## Video Demonstrations
 
 - Lab 2 includes video files showing the output of both the accumulate and Gaussian methods.  
-    Check the `lab2/data/` directory for sample results.
+    Check the `lab2/videos/` directory for sample results.
 
 [![Accumulate Method Output]](lab_2/lab/videos/indoor_flying4_event_stream.mp4)
 [![Gaussian Method Output]](lab_2/lab/videos/indoor_flying4_images.mp4)
