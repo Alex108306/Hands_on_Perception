@@ -12,6 +12,7 @@
 
 using namespace std;
 
+// Function to draw cube on top of the detected marker
 void draw_cube(cv::Mat img, vector<cv::Point2f> marker, cv::Mat camera_matrix, cv::Mat dist_coeffs, cv::Vec3d rvec, cv::Vec3d tvec, float marker_length){
     // Define the 3D points of the cube
     vector<cv::Point3f> cube_points = {

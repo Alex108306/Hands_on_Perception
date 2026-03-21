@@ -38,6 +38,7 @@ bool str_to_dict_aruco(string &s, cv::aruco::PredefinedDictionaryType &out){
     return true;
 }
 
+// Function to draw line between two arucos and visualize distance
 void draw_line_distance(cv::Mat img, vector<vector<cv::Point2f>> marker_corners, cv::Mat camera_matrix, cv::Mat dist_coeffs, vector<cv::Vec3d> rvecs, vector<cv::Vec3d> tvecs){
     // Calculate distance between two arucos
     float rel_pos_x = tvecs[1][0] - tvecs[0][0];
@@ -45,7 +46,7 @@ void draw_line_distance(cv::Mat img, vector<vector<cv::Point2f>> marker_corners,
     float rel_pos_z = tvecs[1][2] - tvecs[0][2];
     float distance = sqrt(pow(rel_pos_x,2) + pow(rel_pos_y,2) + pow(rel_pos_z,2));
     string distance_viz = cv::format("Distance: %.3f", distance);
-    cv::putText(img, distance_viz, cv::Point2f(0, 10), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 2);
+    cv::putText(img, distance_viz, cv::Point2f(0, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 2);
 
     // Draw distance line
     cv::Point2f start_point = (marker_corners[0][0] + marker_corners[0][1] + marker_corners[0][2] + marker_corners[0][3]) / 4.f;

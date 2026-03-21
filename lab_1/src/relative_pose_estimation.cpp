@@ -115,15 +115,38 @@ int main(int argc, char* argv[]){
             for(unsigned int i = 0; i < marker_ids.size(); i++){
                 cv::drawFrameAxes(img, camera_matrix, dist_coeffs, rvecs[i], tvecs[i], marker_length * 1.5f, 2);
             }
-            float rel_pos_x = tvecs[1][0] - tvecs[0][0];
-            float rel_pos_y = tvecs[1][1] - tvecs[0][1];
-            float rel_pos_z = tvecs[1][2] - tvecs[0][2];
-            string pos_x = cv::format("Relative pos x: %.3f", rel_pos_x);
-            string pos_y = cv::format("Relative pos y: %.3f", rel_pos_y);
-            string pos_z = cv::format("Relative pos z: %.3f", rel_pos_z);
-            cv::putText(img, pos_x, cv::Point2f(0, 10), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 2);
-            cv::putText(img, pos_y, cv::Point2f(0, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 2);
-            cv::putText(img, pos_z, cv::Point2f(0, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 0, 0), 2);
+
+            // assign left and right marker based on x-axis position in camera frame
+            vector<cv::Vec3d> left_rvecs(nMarkers), right_rvecs(nMarkers);
+            vector<cv::Vec3d> left_tvecs(nMarkers), right_tvecs(nMarkers);
+            if (tvecs[0][0] < tvecs[1][0]){
+                left_rvecs[0] = rvecs[0];
+                left_tvecs[0] = tvecs[0];
+                right_rvecs[0] = rvecs[1];
+                right_tvecs[0] = tvecs[1];  
+            }
+            else{
+                left_rvecs[0] = rvecs[1];
+                left_tvecs[0] = tvecs[1];
+                right_rvecs[0] = rvecs[0];
+                right_tvecs[0] = tvecs[0];  
+            }
+            // Get Rotation matrix left and right marker in camera frame
+            cv::Mat R_left, R_right;
+            cv::Rodrigues(left_rvecs[0], R_left);
+            cv::Rodrigues(right_rvecs[0], R_right);
+                    
+            // pose of marker right in marker left frame: Xr = R_left.T @ t_rel
+            cv::Mat R_rel = R_left.t() * R_right;
+            cv::Mat t_left = (cv::Mat_<double>(3,1) << left_tvecs[0][0], left_tvecs[0][1], left_tvecs[0][2]);
+            cv::Mat t_right = (cv::Mat_<double>(3,1) << right_tvecs[0][0], right_tvecs[0][1], right_tvecs[0][2]);
+            cv::Mat t_rel = R_left.t() * (t_right - t_left);
+            string pos_x = cv::format("Relative pos x: %.3f", t_rel.at<double>(0, 0));
+            string pos_y = cv::format("Relative pos y: %.3f", t_rel.at<double>(1, 0));
+            string pos_z = cv::format("Relative pos z: %.3f", t_rel.at<double>(2, 0));
+            cv::putText(img, pos_x, cv::Point2f(0, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 2);
+            cv::putText(img, pos_y, cv::Point2f(0, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 2);
+            cv::putText(img, pos_z, cv::Point2f(0, 70), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 0, 0), 2);
         }
 
         // Show image

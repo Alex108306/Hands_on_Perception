@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Defining function that map from string type to Dictionary type for opencv
 bool str_to_dict_aruco(string &s, cv::aruco::PredefinedDictionaryType &out){
     unordered_map<string, cv::aruco::PredefinedDictionaryType> kdict = {
         {"DICT_4X4_50", cv::aruco::DICT_4X4_50},
@@ -36,6 +37,7 @@ bool str_to_dict_aruco(string &s, cv::aruco::PredefinedDictionaryType &out){
 
 int main(int argc, char* argv[]) {
 
+    // Store input from command line
     if (argc < 7){
     std::cerr << "Usage: " << argv[0] << " <NUM_ROWS::int> <NUM_COLLUMS::int> <DICT_NAME> <MARKER_SIZE:int> <SEPERATION:int> <OUTPUT_FILE.png>" << std::endl;
     return -1;
@@ -47,12 +49,14 @@ int main(int argc, char* argv[]) {
     float seperation = float(stoi(argv[5]));
     string name_png_file = argv[6];
 
+    // Initialize Aruco marker dictionary
     cv::aruco::PredefinedDictionaryType dictType;
 
     if (str_to_dict_aruco(dict_aruco_marker, dictType) != true){
         cerr << "Invalid dictionary name: " << dict_aruco_marker << endl;
     }
 
+    // Create grid board and store object points and image points for camera calibration
     cv::Mat markerImg;
 
     cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictType);
@@ -65,6 +69,7 @@ int main(int argc, char* argv[]) {
 
     float total_height = num_rows * marker_size + (num_rows - 1) * seperation + 50;
 
+    // Generate the board image and save it as a PNG file
     board_marker.generateImage(cv::Size(total_width, total_height), markerImg, 20);
 
     cv::imwrite(name_png_file, markerImg);

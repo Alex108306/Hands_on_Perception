@@ -117,9 +117,9 @@ int main(int argc, char* argv[]){
                 string pos_x = cv::format("x: %.3f", tvecs[i][0]);
                 string pos_y = cv::format("y: %.3f", tvecs[i][1]);
                 string pos_z = cv::format("z: %.3f", tvecs[i][2]);
-                cv::putText(img, pos_x, cv::Point2f(0, 10), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 2);
-                cv::putText(img, pos_y, cv::Point2f(0, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 2);
-                cv::putText(img, pos_z, cv::Point2f(0, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 0, 0), 2);
+                cv::putText(img, pos_x, cv::Point2f(0, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 2);
+                cv::putText(img, pos_y, cv::Point2f(0, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 2);
+                cv::putText(img, pos_z, cv::Point2f(0, 70), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 0, 0), 2);
             }
         }
 

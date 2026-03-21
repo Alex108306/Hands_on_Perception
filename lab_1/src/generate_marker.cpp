@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Defining function that map from string type to Dictionary type for opencv
 bool str_to_dict_aruco(string &s, cv::aruco::PredefinedDictionaryType &out){
     unordered_map<string, cv::aruco::PredefinedDictionaryType> kdict = {
         {"DICT_4X4_50", cv::aruco::DICT_4X4_50},
@@ -36,16 +37,18 @@ bool str_to_dict_aruco(string &s, cv::aruco::PredefinedDictionaryType &out){
 
 int main(int argc, char* argv[]) {
 
+    // Store input from command line
     if (argc < 5){
     std::cerr << "Usage: " << argv[0] << " <DICT_NAME> <ID_MARKER:int> <MARKER_SIZE:int> <OUTPUT_FILE.png>" << std::endl;
     return -1;
-  }
+    }
 
     string dict_aruco_marker = argv[1];
     int id_marker = stoi(argv[2]);
     int marker_size = stoi(argv[3]);
     string name_png_file = argv[4];
 
+    // Initialize Aruco marker dictionary
     cv::aruco::PredefinedDictionaryType dictType;
 
     if (str_to_dict_aruco(dict_aruco_marker, dictType) != true){
@@ -58,6 +61,7 @@ int main(int argc, char* argv[]) {
 
     cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictType);
 
+    // Generate the marker image and save it as a PNG file
     cv::aruco::generateImageMarker(dict, id_marker, marker_size, markerImg, 1);
 
     cv::copyMakeBorder(markerImg, markerPadded, 20, 20, 20, 20, cv::BORDER_CONSTANT, cv::Scalar(255, 255, 255));

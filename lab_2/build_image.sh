@@ -1,0 +1,1 @@
+docker build -t prophesee_sdk:evk4 .

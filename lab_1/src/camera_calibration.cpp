@@ -69,11 +69,12 @@ int main(int argc, char *argv[]){
     if (str_to_dict_aruco(dict_name, dict_type) != true){
         cerr << "Invalid dictionaey name:" << dict_name << endl;
     }
-    
+
     cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dict_type);
     cv::aruco::DetectorParameters detect_params = cv::aruco::DetectorParameters();
     cv::aruco::ArucoDetector detector(dict, detect_params);
 
+    // Initialize webcam openning and key to close webcam
     cv::VideoCapture webCam(0);
 
     if (webCam.isOpened() == false){
@@ -90,7 +91,8 @@ int main(int argc, char *argv[]){
         }
 
         Aruco_detect_Img = Original_Img.clone();
-
+        
+        // Detect markers and store marker corners and marker IDs
         detector.detectMarkers(Aruco_detect_Img, marker_corners, Marker_IDs, rejected_candidates);
 
         cv::aruco::drawDetectedMarkers(Aruco_detect_Img, marker_corners, Marker_IDs);
@@ -104,7 +106,7 @@ int main(int argc, char *argv[]){
         key = cv::waitKey(1);  // gets the key pressed
         
         if (key == 'c'){
-            cout << "Frame captured" << endl;
+            cout << "Frame captured {" << i << "}" << endl;
             string file_path = "../data/image_" + to_string(++i) + ".png";
             cv::imwrite(file_path, Original_Img);
         }
@@ -121,7 +123,8 @@ int main(int argc, char *argv[]){
         return -1;
     }
 
-    cv::aruco::GridBoard grid_board(cv::Size(num_collums, num_rows), length_aruco, seperation, dict); // if switch to num_rows, num collums, the reprojection error will be lower
+    // Create grid board and store object points and image points for camera calibration
+    cv::aruco::GridBoard grid_board(cv::Size(num_rows, num_collums), length_aruco, seperation, dict);
     cv::Mat camera_matrix, distCoeffs;
     vector<cv::Mat> rvecs, tvecs;
     vector<cv::Mat> processed_objectPoints, processed_imagePoints;
@@ -144,6 +147,7 @@ int main(int argc, char *argv[]){
         }
     }
 
+    // Calibrate camera and get reprojection error
     double repError = cv::calibrateCamera(processed_objectPoints, processed_imagePoints, img_size, camera_matrix, distCoeffs, rvecs, tvecs);
     
     // Store calibration parameters in yaml file

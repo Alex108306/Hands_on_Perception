@@ -69,13 +69,17 @@ int main(int argc, char* argv[]) {
       break;
     }
 
+    // Initialize Aruco marker detector
     cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictType);
     cv::aruco::DetectorParameters detector_params = cv::aruco::DetectorParameters();
     cv::aruco::ArucoDetector detector(dict, detector_params);
     std::vector<int> markerIds;
     std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
+
+    // Detect markers and store marker corners and marker IDs
     detector.detectMarkers(img, markerCorners, markerIds, rejectedCandidates);
 
+    // Draw detected markers
     cv::aruco::drawDetectedMarkers(img, markerCorners, markerIds);
 
 
