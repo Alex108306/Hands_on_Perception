@@ -40,8 +40,11 @@ Lab 2 includes video files showing the output of Gaussian methods.
 - **Gray Scale Video:**  
   ![Accumulate Method Output](lab_2/lab/videos/indoor_flying4_images.gif)
 
+- **Accumulate Method Output:**  
+  ![Gaussian Method Output](lab_2/lab/videos/indoor_flying4_event_stream_accumulate_method.gif)
+
 - **Gaussian Method Output:**  
-  ![Gaussian Method Output](lab_2/lab/videos/indoor_flying4_event_stream.gif)
+  ![Gaussian Method Output](lab_2/lab/videos/indoor_flying4_event_stream_gaussian_method.gif)
 
 *For higher quality or longer videos, see the MP4 files in the same directory.*
 
